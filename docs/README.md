@@ -1,35 +1,35 @@
-#Video Player
+# Video Player
 
 My name is Santiago Moliner, I’m a student at the Bachelor’s Degree in Video Games by UPC at CITM. This is my personal research about a functional video player inside Visual Studio C++ using SDL Library and ffmpeg libraries.
 
 
-##Introduction:
+## Introduction:
 
 In this research project, i will teach you how you can implement a video player in your C++ code using the SDL Library and ffmpeg libraries, implementing a module that can reproduce AVI files. Video Playing inside your game is a complex task, and there are many ways of implementing a video player inside.I have chosen one that i could understand with my programming knowledge.
 
-##Pre-rendered cutscenes vs Real Time cutscenes:
+## Pre-rendered cutscenes vs Real Time cutscenes:
 
 In video games cutscenes can be classified in many ways, but when talking about video rendering, there are two different categories: pre-rendered and real time cutscenes. Real time cutscenes use the game engine to generate a cutscene that is rendered while the game is playing. Pre-rendered cutscenes, as the name implies, are cutscenes that have been rendered before, and the game just plays the cutscene
 
-###Example of Real Time cutscene:
+### Example of Real Time cutscene:
 
 https://www.youtube.com/watch?v=N694O2vnKnc
 
 
-###Example of Pre-rendered cutscene:
+### Example of Pre-rendered cutscene:
 
 https://www.youtube.com/watch?v=ylFzJ3wRgHw
 
 
 
-##Codec ecosystem and options
+## Codec ecosystem and options
 
 Creating your own solution to the problem can have legal problems, there are thousands of broad patents covering different aspects of video decompression. So if you want to do it by yourself you will have to read, understand and memorize all these patents so that you can carefully tip-toe your code and algorithms around them.
 
 The best option is to pick one of the existing alternatives and do the best you can with it. Some of the best alternatives are: Bink, Platform specific, H.264, WebM, Dirac, Theora, and DivX.
 
 
-###Bink
+### Bink
 
 Bink from RAD game tools is as close as you can get to a de facto standard in the games industry, being used in more than 5800 games on 14 different platforms.
 
@@ -39,7 +39,7 @@ People who want to play a lot of video in CPU taxing situations can still choose
 
 
 
-###Platform specific
+### Platform specific
 
 Another approach to video playing is to not develop a platform-independent library but instead use the video playing capabilities inherent in each platform. For example, Windows has Windows Media Foundation, MacOS has QuickTime, etc.
 
@@ -50,7 +50,7 @@ But going platform specific also has a lot of drawbacks. If you target many plat
 Furthermore, it may be tricky to support the same capabilities on all different platforms.
 
 
-###H.264
+### H.264
 
 H.264 is used in Blu-ray players, video cameras, on iTunes, YouTube, etc. If you want a codec with good tool support and high quality, H.264 is the best choice.
 
@@ -60,7 +60,7 @@ The H.264 patents are managed by an entity known as MPEG LA. They have gathered 
 
 
 
-###VP8 (WebM)
+### VP8 (WebM)
 
 VP8 is a “free” video codec owned by Google. It is covered by patents, but Google has granted free use of those patents and also provides a BSD licensed library libvpx for encoding and decoding video files. The format is also endorsed by the Free Software Foundation.
 
