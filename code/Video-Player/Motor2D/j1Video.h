@@ -2,10 +2,11 @@
 #define __j1VIDEO_H__
 
 #include "j1Module.h"
-//VIDEO FOR WINDOWS LIBRARY
+
+//Video player for windows libraries
 #include <dshow.h>
 #include <Vfw.h>                          
-#pragma comment( lib, "vfw32.lib" )                
+#pragma comment(lib,"vfw32.lib")               
 
 
 class j1Video : public j1Module
@@ -33,9 +34,9 @@ public:
 	bool				isVideoFinished = false;
 
 private:
+	// Frame Counter
+	int			frame = 0;							
 
-	int			frame = 0;							// Frame Counter
-	
 	AVISTREAMINFO       psi;                        // Pointer To A Structure Containing Stream Info
 	PAVISTREAM			pavi;                       // Handle To An Open Stream
 	PGETFRAME			pgf;                        // Pointer To A GetFrame Object

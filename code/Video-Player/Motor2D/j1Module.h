@@ -7,6 +7,7 @@
 #define __j1MODULE_H__
 
 #include "p2SString.h"
+#include "PugiXml\src\pugixml.hpp"
 
 class j1App;
 
@@ -17,13 +18,16 @@ public:
 	j1Module() : active(false)
 	{}
 
+	virtual ~j1Module()
+	{}
+
 	void Init()
 	{
 		active = true;
 	}
 
 	// Called before render is available
-	virtual bool Awake()
+	virtual bool Awake(pugi::xml_node&)
 	{
 		return true;
 	}
@@ -54,6 +58,16 @@ public:
 
 	// Called before quitting
 	virtual bool CleanUp()
+	{
+		return true;
+	}
+
+	virtual bool Load(pugi::xml_node&)
+	{
+		return true;
+	}
+
+	virtual bool Save(pugi::xml_node&) const
 	{
 		return true;
 	}

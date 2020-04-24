@@ -54,17 +54,18 @@ void j1Video::OpenAVI(LPCSTR path)
 
 bool j1Video::GrabAVIFrame()
 {
-
+	
 	LPBITMAPINFOHEADER lpbi;													 // Holds The Bitmap Header Information
 	lpbi = (LPBITMAPINFOHEADER)AVIStreamGetFrame(pgf, frame);					// Grab Data From The AVI Stream
 	pdata = (char *)lpbi + lpbi->biSize + lpbi->biClrUsed * sizeof(RGBQUAD);    // Pointer To Data Returned By AVIStreamGetFrame
 																				// (Skip The Header Info To Get To The Data)
 																				// Convert Data To Requested Bitmap Format
-
+	
+	
 	SDL_Surface* surface = SDL_CreateRGBSurfaceFrom(pdata, width, height, lpbi->biBitCount, width * 3, 0, 0, 0, 0);
 	SDL_Texture* texture = App->tex->LoadSurface(surface);
 
-
+	
 	App->render->Blit(texture, 0, 0, NULL, SDL_FLIP_VERTICAL);
 
 
@@ -79,10 +80,12 @@ bool j1Video::GrabAVIFrame()
 		isVideoFinished = true;
 	}
 	
-	// TODO 5.2: Unload the texture and free the surface after the blit.
+	
 	App->tex->UnLoad(texture);
 	SDL_FreeSurface(surface);
 
+
+	
 	char   title[100];                     
 	mpf = AVIStreamSampleToTime(pavi, lastFrame) / lastFrame;        // Calculate Rough Milliseconds Per Frame
 	wsprintf(title, "AVI Player: Width: %d, Height: %d, Frames: %d, Miliseconds per frame: %d", width, height, lastFrame, mpf);

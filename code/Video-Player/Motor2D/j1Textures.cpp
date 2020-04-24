@@ -2,7 +2,6 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1Render.h"
-#include "j1FileSystem.h"
 #include "j1Textures.h"
 
 #include "SDL_image/include/SDL_image.h"
@@ -18,7 +17,7 @@ j1Textures::~j1Textures()
 {}
 
 // Called before render is available
-bool j1Textures::Awake()
+bool j1Textures::Awake(pugi::xml_node& config)
 {
 	LOG("Init Image library");
 	bool ret = true;
@@ -47,13 +46,11 @@ bool j1Textures::Start()
 bool j1Textures::CleanUp()
 {
 	LOG("Freeing textures and Image library");
-	p2List_item<SDL_Texture*>* item;
-
-	for(item = textures.start; item != NULL; item = item->next)
+	std::vector<SDL_Texture*>::iterator item;
+	for (item = textures.begin(); item != textures.end(); ++item)
 	{
-		SDL_DestroyTexture(item->data);
+		delete (*item);
 	}
-
 	textures.clear();
 	IMG_Quit();
 	return true;
@@ -81,14 +78,14 @@ SDL_Texture* const j1Textures::Load(const char* path)
 // Unload texture
 bool j1Textures::UnLoad(SDL_Texture* texture)
 {
-	p2List_item<SDL_Texture*>* item;
+	std::vector<SDL_Texture*>::iterator item;
 
-	for(item = textures.start; item != NULL; item = item->next)
+	for (item = textures.begin(); item != textures.end(); ++item)
 	{
-		if(texture == item->data)
+		if (texture == (*item))
 		{
-			SDL_DestroyTexture(item->data);
-			textures.del(item);
+			textures.erase(item);
+			SDL_DestroyTexture(*item);
 			return true;
 		}
 	}
@@ -107,7 +104,7 @@ SDL_Texture* const j1Textures::LoadSurface(SDL_Surface* surface)
 	}
 	else
 	{
-		textures.add(texture);
+		textures.push_back(texture);
 	}
 
 	return texture;

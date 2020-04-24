@@ -20,15 +20,19 @@ j1Render::~j1Render()
 {}
 
 // Called before render is available
-bool j1Render::Awake()
+bool j1Render::Awake(pugi::xml_node& config)
 {
 	LOG("Create SDL rendering context");
 	bool ret = true;
 	// load flags
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
-	flags |= SDL_RENDERER_PRESENTVSYNC;
-	  
+	if(config.child("vsync").attribute("value").as_bool(true) == true)
+	{
+		flags |= SDL_RENDERER_PRESENTVSYNC;
+		LOG("Using vsync");
+	}
+
 	renderer = SDL_CreateRenderer(App->win->window, -1, flags);
 
 	if(renderer == NULL)
@@ -83,6 +87,26 @@ bool j1Render::CleanUp()
 	return true;
 }
 
+// Load Game State
+bool j1Render::Load(pugi::xml_node& data)
+{
+	camera.x = data.child("camera").attribute("x").as_int();
+	camera.y = data.child("camera").attribute("y").as_int();
+
+	return true;
+}
+
+// Save Game State
+bool j1Render::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node cam = data.append_child("camera");
+
+	cam.append_attribute("x") = camera.x;
+	cam.append_attribute("y") = camera.y;
+
+	return true;
+}
+
 void j1Render::SetBackgroundColor(SDL_Color color)
 {
 	background = color;
@@ -98,8 +122,19 @@ void j1Render::ResetViewPort()
 	SDL_RenderSetViewport(renderer, &viewport);
 }
 
+iPoint j1Render::ScreenToWorld(int x, int y) const
+{
+	iPoint ret;
+	int scale = App->win->GetScale();
+
+	ret.x = (x - camera.x / scale);
+	ret.y = (y - camera.y / scale);
+
+	return ret;
+}
+
 // Blit to screen
-bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivot_x, int pivot_y) const
+bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, SDL_RendererFlip rendererFlip, float speed, double angle, int pivot_x, int pivot_y) const
 {
 	bool ret = true;
 	uint scale = App->win->GetScale();
@@ -122,7 +157,7 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 	rect.h *= scale;
 
 	SDL_Point* p = NULL;
-	SDL_Point pivot;
+	SDL_Point pivot = { 0,0 };
 
 	if(pivot_x != INT_MAX && pivot_y != INT_MAX)
 	{
@@ -131,7 +166,8 @@ bool j1Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section,
 		p = &pivot;
 	}
 
-	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
+	//TODO 6.3: And use the flag on SDL_RenderCopyEx(...)
+	if(SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, rendererFlip) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;

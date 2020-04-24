@@ -16,12 +16,12 @@ public:
 	virtual ~j1Window();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node&);
 
 	// Called before quitting
 	bool CleanUp();
 
-	// Change title
+	// Changae title
 	void SetTitle(const char* new_title);
 
 	// Retrive window size
@@ -38,6 +38,7 @@ public:
 	SDL_Surface* screen_surface;
 
 private:
+	p2SString	title;
 	uint		width;
 	uint		height;
 	uint		scale;

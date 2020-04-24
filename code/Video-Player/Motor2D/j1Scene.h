@@ -2,6 +2,7 @@
 #define __j1SCENE_H__
 
 #include "j1Module.h"
+#include "j1Timer.h"
 
 struct SDL_Texture;
 
@@ -32,8 +33,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-private:
-	SDL_Texture* img;
+public:
+	j1Timer introTime;
 };
 
 #endif // __j1SCENE_H__
