@@ -13,13 +13,14 @@ In video games cutscenes can be classified in many ways, but when talking about 
 
 ### Example of Real Time cutscene:
 
-<div style="position:relative;height:0;padding-bottom:52.18%"><iframe src="https://www.youtube.com/embed/pa1fi1gxxUw?ecver=2" style="position:absolute;width:100%;height:100%;left:0" width="690" height="360" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
-Uncharted 2. Cutscene before a level.
+<div style="position:relative;height:0;padding-bottom:52.18%"><iframe src="https://www.youtube.com/watch?v=prmL4_rcbOE" style="position:absolute;width:100%;height:100%;left:0" width="690" height="360" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+Bloodborne bossfight intro.
 
 
 ### Example of Pre-rendered cutscene:
 
-https://www.youtube.com/watch?v=ylFzJ3wRgHw
+<div style="position:relative;height:0;padding-bottom:52.18%"><iframe src="https://www.youtube.com/watch?v=ylFzJ3wRgHw" style="position:absolute;width:100%;height:100%;left:0" width="690" height="360" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>
+Dark Souls Intro.
 
 
 
