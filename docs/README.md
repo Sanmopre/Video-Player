@@ -102,8 +102,6 @@ To be able to declare those, we have to include the video for windows library an
 **mpf**: Used to calculate how many milliseconds each frame is displayed for.
 
 ```
-
-
 int			frame = 0;			
 AVISTREAMINFO       	psi;      
 PAVISTREAM		pavi;     
@@ -114,9 +112,112 @@ int			width;
 int			height;   
 char*			pdata;		
 int			mpf;      
-
-
-
 ```
 
+
+
+## Exercise (TODO)
+
+### TODO 1: Call the initialize function.
+
+- You have to pass the path to the AVI file.
+
+SOLUTION:
+```
+App->video->Initialize("video/sample(good).avi");
+```
+
+
+### TODO 2: Open and then release the stream from the AVI file.
+
+TODO 2.1: Open a single stream from the AVI file.
+- Use AVIStreamOpenFromFile(...).
+- The first parameter is a pointer to a buffer that receives the stream handle.
+- The second parameter is the path to the file.
+- The third parameter is the type of stream we want to open (in this case streamtypeVIDEO).
+- The fourth parameter is which video stream we want (there can be more than one), in this case: 0.
+- The rest (RGB masks), are 0 if you do not want to put a mask on it.
+
+SOLUTION:
+```
+if (AVIStreamOpenFromFile(&pavi, path, streamtypeVIDEO, 0, OF_READ, NULL) != 0)
+	LOG("Failed To Open The AVI Stream");
+```
+
+TODO 2.2: Release the stream.
+- Use AVIStreamRelease(...)
+
+SOLUTION:
+```
+AVIStreamRelease(pavi);
+```
+
+
+### TODO 3: Decompress video frames from the AVI file and deallocate the GetFrame resources.
+
+TODO 3.1: Decompress video frames from the AVI file.
+- Use AVIStreamFrameOpen(...).
+- This function returns a PGETFRAME.
+- On the second parameter you can pass AVIGETFRAMEF_BESTDISPLAYFMT to select the best display format. Cast it to LPBITMAPINFOHEADER.
+
+SOLUTION:
+```
+pgf = AVIStreamGetFrameOpen(pavi, (LPBITMAPINFOHEADER)AVIGETFRAMEF_BESTDISPLAYFMT);
+	if (pgf == NULL)
+		LOG("Failed To Open The AVI Frame");
+```
+
+TODO 3.2: Deallocate the getframe resources.
+- AVIStreamGetFrameClose(...).
+
+SOLUTION:
+```
+AVIStreamGetFrameClose(pgf);
+```
+
+### TODO 4: Prepare the video.
+If you want to be able to play any video, you will need to compress it with the right codec. You have many ways to do this. There are lots of video converters that allows you to chose an especific codec. In my case I use Adobe Premiere 2018. I am confortable with it because I am more used to it and it has export options like a video converter, but you can use other softwares if you feel more confortable with them.
+
+Follow the next steps:
+1. Go to File->Export->Media...
+2. Go to Video Codec options and select "Códec Intel IYUV"
+
+SOLUTION
+If you have done that steps right, the program should not break now.
+
+### TODO 5: Create the surface and the texture, and then free them.
+
+TODO 5.1: Create a surface using the bitmap data we have above this TODO, and create the texture of the frame with that surface (use LoadSurface from textures module)
+- pdata holds the texture data (pixels)
+- biBitCount holds the depht in bits and is contained in the LPBITMAPINFOHEADER structure
+- pitch is the length of a row of pixels in bytes (widht x 3)
+
+SOLUTION:
+```
+SDL_Surface* surface = SDL_CreateRGBSurfaceFrom(pdata, width, height, lpbi->biBitCount, width * 3, 0, 0, 0, 0);
+	SDL_Texture* texture = App->tex->LoadSurface(surface);
+```
+
+TODO 5.2: Unload the texture and free the surface after the blit.
+- Use UnLoad(...) from the textures module and SDL_FreeSurface(...).
+
+SOLUTION:
+```
+App->tex->UnLoad(texture);
+	SDL_FreeSurface(surface);
+```
+
+### TODO 6: Play the music of the video.
+
+-  Use the audio module.
+
+SOLUTION:
+```
+App->audio->PlayMusic("video/sample.ogg", 0.0f);
+```
+
+# References:
+
+https://docs.microsoft.com/en-us/windows/uwp/files/quickstart-managing-folders-in-the-music-pictures-and-videos-libraries
+https://www.gamasutra.com/view/news/170671/Indepth_Playing_with_video.php
 
