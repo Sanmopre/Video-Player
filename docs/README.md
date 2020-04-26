@@ -93,12 +93,19 @@ VARIABLES:
 To be able to declare those, we have to include the video for windows library and header files. I also included the direct show header files beacause vfw is a little bit old and outdated, and we will be able to decompress videos with diferent codecs.
 
 **frame**: Current frame we want to display from the animation. We start off at 0 (first frame). 
+
 **psi**: The structure that will hold information about our AVI file later in the code. 
+
 **pavi**: Pointer to a buffer that receives the new stream handle once the AVI file has been opened. 
+
 **pgf**: Pointer to our GetFrame object. 
+
 **lastframe**: Hold the number of the last frame in the AVI animation. 
+
 **width and height**: Hold the dimensions of the AVI stream.
+
 **pdata**: Pointer to the image data returned after we get a frame of animation from the AVI.
+
 **mpf**: Used to calculate how many milliseconds each frame is displayed for.
 
 ```
