@@ -67,3 +67,24 @@ The H.264 patents are managed by an entity known as MPEG LA. They have gathered 
 VP8 is a “free” video codec owned by Google. It is covered by patents, but Google has granted free use of those patents and also provides a BSD licensed library libvpx for encoding and decoding video files. The format is also endorsed by the Free Software Foundation.
 
 It is generally acknowledged that when it comes to quality, VP8 is not quite as good as H.264, though the differences are not enormous. So you are trading some visual quality for the convenience of a license free format.
+
+
+
+## 3. The Video Player
+
+The explanation of how it works is quite simple. First, we have to read the avi file and the stream data. Then, on each loop we will take the bitmap data of a frame. With that, we will create a surface and a texture from that surface, and we will blit it on screen. Of course there are more steps to follow inbetween those, but that is a brief explanation of how it works. Here we have a representaion of how the algorith works.
+
+
+### 3.1 The Video Module
+
+MAIN FUNCTIONS:
+
+We will have four esential functions.
+ 
+-**OpenAVI**:  Opens the avi file and reads its stream data.
+
+-**Initialize**: Calls OpenAVI with the path to the file (we will call this function whenever we want to play a video)
+
+-**GrabAVIFrame**: Gets the frame data, makes a surface and a texture, and blit it.
+
+-**CloseAVI**: Frees the memory we have used.
