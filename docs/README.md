@@ -73,6 +73,9 @@ It is generally acknowledged that when it comes to quality, VP8 is not quite as 
 
 The explanation of how it works is quite simple. First, we have to read the avi file and the stream data. Then, on each loop we will take the bitmap data of a frame. With that, we will create a surface and a texture from that surface, and we will blit it on screen. Of course there are more steps to follow inbetween those, but that is a brief explanation of how it works. Here we have a representaion of how the algorith works.
 
+![Video_Player_Sketch](https://user-images.githubusercontent.com/40120264/80312821-cb866880-87e7-11ea-9aa6-1a2b21f95e3c.PNG)
+
+
 
 ### The Video Module
 
