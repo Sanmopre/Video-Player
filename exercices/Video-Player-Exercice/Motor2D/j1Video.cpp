@@ -28,7 +28,11 @@ bool j1Video::CleanUp()
 void j1Video::Initialize(char* path)
 {
 	App->win->SetTitle("Video Player");
+
 	OpenAVI(path);                  // Open The AVI File
+		// TODO 6: Play the music of the video using the audio module. 
+
+
 }
 
 void j1Video::OpenAVI(LPCSTR path)

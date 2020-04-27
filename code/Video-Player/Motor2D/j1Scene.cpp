@@ -34,7 +34,6 @@ bool j1Scene::Start()
 {
 	App->win->SetTitle("Video Player");
 	App->video->Initialize("video/sample(good).avi");
-	App->audio->PlayMusic("video/sample.ogg", 0.0f);
 
 	return true;
 }
@@ -59,7 +58,6 @@ bool j1Scene::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_1) && App->video->isVideoFinished) {
 		App->video->Initialize("video/sample(good).avi");
-		App->audio->PlayMusic("video/sample.ogg", 0.0f);
 	}
 
 	return true;

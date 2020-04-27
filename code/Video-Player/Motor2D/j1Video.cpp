@@ -3,6 +3,7 @@
 #include "j1Window.h"
 #include "j1Textures.h"
 #include "j1Render.h"
+#include "j1Audio.h"
 
 #include "j1Video.h"
 
@@ -27,11 +28,11 @@ bool j1Video::CleanUp()
 
 void j1Video::Initialize(char* path)
 {
-	App->win->SetTitle("Video Player");
 	OpenAVI(path);                  // Open The AVI File
+	App->audio->PlayMusic("video/sample.ogg", 0.0f);
 }
 
-void j1Video::OpenAVI(LPCSTR path)
+void j1Video::OpenAVI(char* path)
 {
 	AVIFileInit();                          // Opens The AVIFile Library
 
@@ -77,7 +78,7 @@ bool j1Video::GrabAVIFrame()
 	if (frame >= lastFrame)
 	{
 		frame = 0;
-		isVideoFinished = true;
+		isVideoFinished = true; 
 	}
 	
 	

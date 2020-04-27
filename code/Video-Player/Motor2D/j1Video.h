@@ -24,8 +24,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	void Initialize(char* file_path);
-	void OpenAVI(LPCSTR path);
+	void Initialize(char* path);
+	void OpenAVI(char* path);
 	bool GrabAVIFrame();
 
 	void CloseAVI();
