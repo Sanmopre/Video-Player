@@ -17,6 +17,7 @@ public:
 
 	// Destructor
 	virtual ~j1Video();
+	bool Update(float dt);
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);

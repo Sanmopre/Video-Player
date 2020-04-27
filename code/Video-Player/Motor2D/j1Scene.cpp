@@ -32,7 +32,6 @@ bool j1Scene::Awake()
 // Called before the first frame
 bool j1Scene::Start()
 {
-	App->win->SetTitle("Video Player");
 	App->video->Initialize("video/sample(good).avi");
 
 	return true;
@@ -47,15 +46,6 @@ bool j1Scene::PreUpdate()
 // Called each loop iteration
 bool j1Scene::Update(float dt)
 {
-	if (!App->video->isVideoFinished)
-	{
-		App->video->GrabAVIFrame();
-
-	}
-	else 
-		Mix_PauseMusic();
-
-
 	if (App->input->GetKey(SDL_SCANCODE_1) && App->video->isVideoFinished) {
 		App->video->Initialize("video/sample(good).avi");
 	}

@@ -4,7 +4,7 @@
 #include "j1Textures.h"
 #include "j1Render.h"
 #include "j1Audio.h"
-
+#include "SDL_mixer\include\SDL_mixer.h"
 #include "j1Video.h"
 
 j1Video::j1Video()
@@ -14,6 +14,16 @@ j1Video::j1Video()
 
 j1Video::~j1Video()
 {
+}
+
+bool j1Video::Update(float dt)
+{
+	if (!isVideoFinished)
+	{
+		GrabAVIFrame();
+	}else
+		Mix_PauseMusic();
+	return true;
 }
 
 bool j1Video::Awake(pugi::xml_node &)
@@ -34,8 +44,6 @@ void j1Video::Initialize(char* path)
 
 void j1Video::OpenAVI(char* path)
 {
-	AVIFileInit();                          // Opens The AVIFile Library
-
 	if (AVIStreamOpenFromFile(&pavi, path, streamtypeVIDEO, 0, OF_READ, NULL) != 0) // Opens The AVI Stream
 		LOG("Failed To Open The AVI Stream");
 
@@ -56,7 +64,7 @@ void j1Video::OpenAVI(char* path)
 bool j1Video::GrabAVIFrame()
 {
 	
-	LPBITMAPINFOHEADER lpbi;													 // Holds The Bitmap Header Information
+	LPBITMAPINFOHEADER lpbi;													// Holds The Bitmap Header Information
 	lpbi = (LPBITMAPINFOHEADER)AVIStreamGetFrame(pgf, frame);					// Grab Data From The AVI Stream
 	pdata = (char *)lpbi + lpbi->biSize + lpbi->biClrUsed * sizeof(RGBQUAD);    // Pointer To Data Returned By AVIStreamGetFrame
 																				// (Skip The Header Info To Get To The Data)
